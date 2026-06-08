@@ -4,7 +4,7 @@ metadata:
   name: cloudns-update
   namespace: standard
 spec:
-  schedule: "*/5 * * * *"        
+  schedule: {{ .Values.cronjob.schedule | quote }}     
   jobTemplate:
     spec:
       template:
@@ -12,7 +12,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: updater
-              image: curlimages/curl:latest    
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}" 
               command:
                 - sh
                 - -c
