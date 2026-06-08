@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: fastapi
 spec:
   replicas: {{ .Values.fastapi.replicas }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: fastapi
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: fastapi
     spec:
       containers:
-        - name: {{ .Release.Name }}
+        - name: fastapi
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           ports:
             - containerPort: {{ .Values.service.port }}
