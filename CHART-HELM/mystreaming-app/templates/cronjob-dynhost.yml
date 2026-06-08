@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cloudns-update
+  namespace: standard
+spec:
+  schedule: "*/5 * * * *"        
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: updater
+              image: curlimages/curl:latest    
+              command:
+                - sh
+                - -c
+                - 'curl -s "$DYNURL"'
+              env:
+                - name: DYNURL
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudns-dyndns
+                      key: dynurl
