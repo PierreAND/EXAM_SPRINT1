@@ -9,4 +9,4 @@ spec:
     app: fastapi
   ports:
     - port: 80            
-      targetPort: 5000 
+      targetPort: {{ .Values.fastapi.containerPort }}
