@@ -2,7 +2,6 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: cloudns-update
-  namespace: standard
 spec:
   schedule: {{ .Values.cronjob.schedule | quote }}     
   jobTemplate:
@@ -12,7 +11,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: updater
-              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}" 
+              image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}" 
               command:
                 - sh
                 - -c

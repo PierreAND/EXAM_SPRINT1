@@ -1,0 +1,38 @@
+
+postgres:
+  image: 
+    repository: postgres
+    tag: 12.0-alpine
+  replicas: 1
+  user: admin
+  db: storedb
+  password: password          
+  storage: 10Gi
+  storageClass: local-path
+
+
+fastapi:
+  image: 
+    repository: pandrieu/fastapi
+    tag: v1
+  replicas: 3
+  containerPort: 5000         
+
+
+ingress:
+  host: pandrieu.abrdns.com  
+
+
+pgadmin:
+  image: dpage/pgadmin4
+  replicas: 1
+  email: admin@pandrieu.local
+  password: password
+
+
+cronjob:
+  schedule: "*/5 * * * *"
+  image:
+    repository: curlimages/curl
+    tag: latest
+  dynurl: "TOKEN_DYNHOST"   
